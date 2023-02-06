@@ -1,5 +1,5 @@
 {
-  "name": "GOV.UK Frontend Flask",
+  "name": "GDS PA Community DISCO Prep",
   "description": "Flask based GOV.UK Frontend template app",
   "keywords": ["GOV.UK", "Flask", "Jinja", "WTForms"],
   "website": "https://govuk-frontend-flask.herokuapp.com/",
@@ -15,7 +15,7 @@
     },
     "DEPARTMENT_NAME": {
       "description": "Name of the department providing this service, e,g. HM Land Registry, Ministry of Justice, etc",
-      "value": "[name of department]"
+      "value": "[GDS Data Infrastructure]"
     },
     "DEPARTMENT_URL": {
       "description": "URL of the department providing this service",
@@ -27,11 +27,11 @@
     },
     "SERVICE_NAME": {
       "description": "Name of this service, e.g. Apply for driving licence, Apply for student visa, etc",
-      "value": "[name of service]"
+      "value": "[DISCO Data]"
     },
     "SERVICE_PHASE": {
       "description": "Phase the service is currently in, e.g. Alpha, Beta, etc",
-      "value": "[phase]"
+      "value": "[Alpha]"
     },
     "SERVICE_URL": {
       "description": "URL of this service, e.g. https://something.service.gov.uk",
