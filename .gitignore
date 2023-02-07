@@ -7,6 +7,8 @@ app/static/images*
 app/static/govuk-frontend*
 app/static/VERSION.txt
 
+app/main/creds/*
+
 ### Flask ###
 instance/*
 !instance/.gitignore
