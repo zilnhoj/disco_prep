@@ -3,21 +3,21 @@ import os
 from google.cloud import bigquery
 from google.oauth2 import service_account
 
-SRCDIR = os.path.dirname(os.path.abspath(__file__))
-DATADIR = os.path.join(SRCDIR, 'creds')
-
-CLIENT_SECRET_BQ = os.path.join(DATADIR, 'sde_service_account.json')
-print(f'CLIENT_SECRET_BQ {CLIENT_SECRET_BQ}')
-credentials = service_account.Credentials.from_service_account_file(
-    CLIENT_SECRET_BQ,
-    scopes=["https://www.googleapis.com/auth/cloud-platform"],
-)
-
-client = bigquery.Client(
-    credentials=credentials,
-    project=credentials.project_id,
-)
-
+# SRCDIR = os.path.dirname(os.path.abspath(__file__))
+# DATADIR = os.path.join(SRCDIR, 'creds')
+#
+# CLIENT_SECRET_BQ = os.path.join(DATADIR, 'sde_service_account.json')
+# print(f'CLIENT_SECRET_BQ {CLIENT_SECRET_BQ}')
+# credentials = service_account.Credentials.from_service_account_file(
+#     CLIENT_SECRET_BQ,
+#     scopes=["https://www.googleapis.com/auth/cloud-platform"],
+# )
+#
+# client = bigquery.Client(
+#     credentials=credentials,
+#     project=credentials.project_id,
+# )
+client = bigquery.Client()
 def get_data(start_date, end_date, desiredPage):
     camp_sql = f'''
     DECLARE first_date STRING DEFAULT {start_date};

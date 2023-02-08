@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from govuk_frontend_wtf.wtforms_widgets import GovRadioInput, GovSubmitInput, GovTextInput, GovDateInput
 from wtforms.fields import RadioField, SubmitField, StringField, DateField
-from wtforms.validators import InputRequired, Length
+from wtforms.validators import InputRequired, Length, Optional
 import datetime
 
 
@@ -36,7 +36,7 @@ class DiscoForm(FlaskForm):
                 "Please enter the start date for the period you need data for",
                 widget=GovDateInput(),
                 validators=[
-                    InputRequired(message="Select the start date")
+                    Optional()
                 ]
             )
     end_date = DateField(

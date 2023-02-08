@@ -27,7 +27,7 @@ def index():
 
 
         # df = get_data(start_date, end_date, desiredPage)
-        return redirect(url_for("results"), tables=[df.to_html(classes='data')], titles=df.columns.values)
+        return redirect(url_for("example_form.html"))
     return render_template("example_form.html", form=disco_data_form)
 
 def results():

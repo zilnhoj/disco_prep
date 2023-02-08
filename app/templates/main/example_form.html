@@ -17,7 +17,7 @@
 
         <h1 class="govuk-heading-xl">DISCO Data Prep</h1>
 
-<form action="" method="post" novalidate>
+<form action="/" method="post" novalidate>
         {{ form.csrf_token }}
 
 {{ form.disco_form(params={
@@ -27,14 +27,14 @@
            }) }}
 
            {{ form.start_date(params={
-             'type': 'text',
-             'autocomplete': 'text',
+             'type': 'date',
+             'autocomplete': 'date',
              'spellcheck': false
            }) }}
 
            {{ form.end_date(params={
-             'type': 'string',
-             'autocomplete': 'strig',
+             'type': 'date',
+             'autocomplete': 'date',
              'spellcheck': false
            }) }}
 
