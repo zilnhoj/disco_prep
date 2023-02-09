@@ -1,8 +1,8 @@
 from flask_wtf import FlaskForm
 from govuk_frontend_wtf.wtforms_widgets import GovRadioInput, GovSubmitInput, GovTextInput, GovDateInput
 from wtforms.fields import RadioField, SubmitField, StringField, DateField
-from wtforms.validators import InputRequired, Length, Optional
-import datetime
+from wtforms.validators import InputRequired, Length, Optional, DataRequired
+from datetime import date
 
 
 class CookiesForm(FlaskForm):
@@ -23,6 +23,14 @@ class CookiesForm(FlaskForm):
     save = SubmitField("Save cookie settings", widget=GovSubmitInput())
 
 class DiscoForm(FlaskForm):
+
+    def __date_validator(form, field):
+        # date validator method
+        print(f' field - {field}')
+        print(f' form - {form}')
+        # date_str = (f'{field.day}, {field.month}, {field.year}')
+        # datetime.datetime.strptime(date_str, '%d%m%Ys').date()
+
     disco_form = StringField(
         "Desired URL",
         widget=GovTextInput(),
@@ -36,14 +44,15 @@ class DiscoForm(FlaskForm):
                 "Please enter the start date for the period you need data for",
                 widget=GovDateInput(),
                 validators=[
-                    Optional()
-                ]
+                    InputRequired(message="Select the start date"), __date_validator]
             )
+
     end_date = DateField(
                 "Please enter the end date for the period you need data for",
                 widget=GovDateInput(),
                 validators=[
-                    InputRequired(message="Select the end date")]
+                    InputRequired(message="Select the end date"), __date_validator]
             )
 
     submit = SubmitField("Continue", widget=GovSubmitInput())
+

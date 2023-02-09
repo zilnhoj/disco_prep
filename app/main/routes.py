@@ -9,26 +9,24 @@ from app.main.get_data import get_data
 import pandas as pd
 
 
+
 @bp.route("/", methods=["GET", "POST"])
 def index():
 
-    disco_data_form = DiscoForm()
-    if disco_data_form.validate_on_submit():
-        # if request.method == "POST":
-        # start_date = request.form.values()
-        # end_date = request.form.values()
-        print(f'request.form.values - {request.form.values()}')
+    form = DiscoForm()
 
-        # cir_date_ls = [x for x in cir_date]
-        # g.cir_date = f'{cir_date_ls[0]}-{cir_date_ls[1]}-{cir_date_ls[2]}'
-        # print(f'value for date {g.cir_date}')
-            # return render_template("choose-circuit.html", cir_date=g.cir_date)
-            # return render_template("choose-circuit.html")
+    if form.validate_on_submit():
+        start_date = form.start_date.data
+        end_date = form.end_date.data
+        print(f'start_date {start_date}')
+        print(f'end_date {end_date}')
 
 
-        # df = get_data(start_date, end_date, desiredPage)
+        # code to get dataframe from BQ
+
+
         return redirect(url_for("example_form.html"))
-    return render_template("example_form.html", form=disco_data_form)
+    return render_template("example_form.html", form=form)
 
 def results():
     return render_template("results.html", form=disco_data_form)
