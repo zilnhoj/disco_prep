@@ -20,7 +20,7 @@ def index():
         print(f'routes end_date day: {end_date}')
         # code to get dataframe from BQ
 
-        return redirect(url_for("example_form.html")) #set to the exampleform page while testing
+        return redirect(url_for("results.html"))
     return render_template("example_form.html", form=form)
 
 def results():

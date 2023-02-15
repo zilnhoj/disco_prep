@@ -28,13 +28,13 @@ class DiscoForm(FlaskForm):
     #     print(f'field data {field.errors}')
     #     print(f'form data {form.end_date.data}')
 
-    def __validate(self, valuelist):
-        print(f'value_list --- {valuelist}')
+    def __validate(form, field):
+        print(f'field ---> {field}')
         # if valuelist:
         #     date_str = ' '.join(valuelist).strip()
         #     print(date_str)
-        # print(f'field data {field.errors}')
-        # print(f'form data {form.end_date.data}')
+        print(f'field data {field.data}')
+        print(f'form data {form.data}')
 
     disco_form = StringField(
         "Desired URL",
@@ -49,6 +49,7 @@ class DiscoForm(FlaskForm):
     start_date = DateField(
                 "Please enter the start date for the period you need data for",
                 widget=GovDateInput(),
+                format='%d/%m/%Y',
                 validators=[
                     InputRequired(message="Select the start date"),
                     __validate
@@ -58,16 +59,12 @@ class DiscoForm(FlaskForm):
     end_date = DateField(
                 "Please enter the end date for the period you need data for",
                 widget=GovDateInput(),
+                format='%d/%m/%Y',
                 validators=[
                     InputRequired(message="Select the end date"),
                     __validate
                 ]
             )
-
-    # def __date_validator(form, field):
-    #     # date validator method
-    #     print(f' field - {field}')
-    #     print(f' form - {form}')
 
 
         # date_str = (f'{field.end_date-day}, {field.end_date-month}, {field.end_date-year}')
