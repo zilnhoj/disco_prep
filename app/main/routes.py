@@ -8,22 +8,17 @@ from app.main.get_data import get_data
 
 import pandas as pd
 
-
-
 @bp.route("/", methods=["GET", "POST"])
 def index():
 
     form = DiscoForm()
 
     if form.validate_on_submit():
-        start_date = form.start_date.data
+        start_date = form.start_date-day.data
+        print(f'routes start_date day: {start_date}')
         end_date = form.end_date.data
-        print(f'start_date {start_date}')
-        print(f'end_date {end_date}')
-
-
+        print(f'routes end_date day: {end_date}')
         # code to get dataframe from BQ
-
 
         return redirect(url_for("example_form.html")) #set to the exampleform page while testing
     return render_template("example_form.html", form=form)

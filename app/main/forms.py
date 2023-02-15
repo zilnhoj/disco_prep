@@ -23,11 +23,18 @@ class CookiesForm(FlaskForm):
     save = SubmitField("Save cookie settings", widget=GovSubmitInput())
 
 class DiscoForm(FlaskForm):
-    def __validate(form, field):
-        print(field)
-        print(f'field data {field.data}')
-        print(f'form data {form.end_date.data}')
+    # def __validate(form, field):
+    #     #print(valueLisst)
+    #     print(f'field data {field.errors}')
+    #     print(f'form data {form.end_date.data}')
 
+    def __validate(self, valuelist):
+        print(f'value_list --- {valuelist}')
+        # if valuelist:
+        #     date_str = ' '.join(valuelist).strip()
+        #     print(date_str)
+        # print(f'field data {field.errors}')
+        # print(f'form data {form.end_date.data}')
 
     disco_form = StringField(
         "Desired URL",
@@ -38,6 +45,7 @@ class DiscoForm(FlaskForm):
         ],
         description="Must include the / at the start of the URL",
     )
+
     start_date = DateField(
                 "Please enter the start date for the period you need data for",
                 widget=GovDateInput(),
@@ -55,7 +63,6 @@ class DiscoForm(FlaskForm):
                     __validate
                 ]
             )
-
 
     # def __date_validator(form, field):
     #     # date validator method
