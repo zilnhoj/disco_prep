@@ -25,7 +25,7 @@ def index():
         # code to get dataframe from BQ
 
 
-        return redirect(url_for("example_form.html"))
+        return redirect(url_for("example_form.html")) #set to the exampleform page while testing
     return render_template("example_form.html", form=form)
 
 def results():

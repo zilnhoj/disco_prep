@@ -23,13 +23,11 @@ class CookiesForm(FlaskForm):
     save = SubmitField("Save cookie settings", widget=GovSubmitInput())
 
 class DiscoForm(FlaskForm):
+    def __validate(form, field):
+        print(field)
+        print(f'field data {field.data}')
+        print(f'form data {form.end_date.data}')
 
-    def __date_validator(form, field):
-        # date validator method
-        print(f' field - {field}')
-        print(f' form - {form}')
-        # date_str = (f'{field.day}, {field.month}, {field.year}')
-        # datetime.datetime.strptime(date_str, '%d%m%Ys').date()
 
     disco_form = StringField(
         "Desired URL",
@@ -44,15 +42,29 @@ class DiscoForm(FlaskForm):
                 "Please enter the start date for the period you need data for",
                 widget=GovDateInput(),
                 validators=[
-                    InputRequired(message="Select the start date"), __date_validator]
+                    InputRequired(message="Select the start date"),
+                    __validate
+                ]
             )
 
     end_date = DateField(
                 "Please enter the end date for the period you need data for",
                 widget=GovDateInput(),
                 validators=[
-                    InputRequired(message="Select the end date"), __date_validator]
+                    InputRequired(message="Select the end date"),
+                    __validate
+                ]
             )
+
+
+    # def __date_validator(form, field):
+    #     # date validator method
+    #     print(f' field - {field}')
+    #     print(f' form - {form}')
+
+
+        # date_str = (f'{field.end_date-day}, {field.end_date-month}, {field.end_date-year}')
+        # datetime.datetime.strptime(date_str, '%d%m%Ys').date()
 
     submit = SubmitField("Continue", widget=GovSubmitInput())
 
