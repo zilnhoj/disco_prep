@@ -2,7 +2,9 @@ from flask_wtf import FlaskForm
 from govuk_frontend_wtf.wtforms_widgets import GovRadioInput, GovSubmitInput, GovTextInput, GovDateInput
 from wtforms.fields import RadioField, SubmitField, StringField, DateField
 from wtforms.validators import InputRequired, Length, Optional, DataRequired
-from datetime import date
+from datetime import date, datetime
+
+
 
 
 class CookiesForm(FlaskForm):
@@ -23,20 +25,23 @@ class CookiesForm(FlaskForm):
     save = SubmitField("Save cookie settings", widget=GovSubmitInput())
 
 class DiscoForm(FlaskForm):
-    # def __validate(form, field):
-    #     #print(valueLisst)
-    #     print(f'field data {field.errors}')
-    #     print(f'form data {form.end_date.data}')
+    def __validate_dt(form, field):
+        print(f'data in field: {field}')
+        print(f'data in form.start_date.data: {form.start_date.data}')
+        dt_ls = field.raw_data
+        dt_str = "".join(dt_ls).strip()
+        date_dt = datetime.strptime(dt_str, "%d%m%Y").date()
+        data = date_dt
+        print(f'date_dt - {date_dt}')
+        print(f'data - {data}')
+        if not date_dt:
+            raise ValidationError('not a valid date buddy')
+        else:
+            print(f'in else statement {data}')
+            # assert date_dt
+            return data
 
-    def __validate(form, field):
-        print(f'field ---> {field}')
-        # if valuelist:
-        #     date_str = ' '.join(valuelist).strip()
-        #     print(date_str)
-        print(f'field data {field.data}')
-        print(f'form data {form.data}')
-
-    disco_form = StringField(
+    desired_url = StringField(
         "Desired URL",
         widget=GovTextInput(),
         validators=[
@@ -49,26 +54,22 @@ class DiscoForm(FlaskForm):
     start_date = DateField(
                 "Please enter the start date for the period you need data for",
                 widget=GovDateInput(),
-                format='%d/%m/%Y',
+                format = "%d %m %Y",
                 validators=[
-                    InputRequired(message="Select the start date"),
-                    __validate
+                    InputRequired()
                 ]
             )
+    print(f'start_date_date:- {start_date}')
 
     end_date = DateField(
                 "Please enter the end date for the period you need data for",
                 widget=GovDateInput(),
-                format='%d/%m/%Y',
+                format="%d %m %Y",
                 validators=[
-                    InputRequired(message="Select the end date"),
-                    __validate
+                    InputRequired()
                 ]
             )
 
-
-        # date_str = (f'{field.end_date-day}, {field.end_date-month}, {field.end_date-year}')
-        # datetime.datetime.strptime(date_str, '%d%m%Ys').date()
 
     submit = SubmitField("Continue", widget=GovSubmitInput())
 

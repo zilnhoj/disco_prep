@@ -16,7 +16,6 @@ csrf = CSRFProtect()
 limiter = Limiter(key_func=get_remote_address, default_limits=["2 per second", "60 per minute"])
 talisman = Talisman()
 
-
 def create_app(config_class=Config):
     app = Flask(__name__, static_url_path="/assets")
     app.config.from_object(config_class)

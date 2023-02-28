@@ -1,4 +1,4 @@
-from flask import flash, json, make_response, redirect, render_template, request
+from flask import flash, json, make_response, redirect, render_template, request, url_for
 from flask_wtf.csrf import CSRFError
 from werkzeug.exceptions import HTTPException
 
@@ -14,17 +14,26 @@ def index():
     form = DiscoForm()
 
     if form.validate_on_submit():
-        start_date = form.start_date-day.data
-        print(f'routes start_date day: {start_date}')
+        desired_url = form.desired_url.data
+        print(f'routes Desired urls = {desired_url}')
+        start_date = form.start_date.data
+        print(f'routes start_date: {start_date}')
         end_date = form.end_date.data
         print(f'routes end_date day: {end_date}')
-        # code to get dataframe from BQ
 
-        return redirect(url_for("results.html"))
+        df = get_data(start_date, end_date, desired_url)
+        print(df.shape)
+        print(type(df))
+        top_ten_df = df.head(10)
+        return render_template("results.html", tables=[top_ten_df.to_html(classes='data')], header=top_ten_df.columns.values)
     return render_template("example_form.html", form=form)
 
+@bp.route("/results", methods=["GET"])
 def results():
-    return render_template("results.html", form=disco_data_form)
+
+
+    return render_template("results.html")
+
 @bp.route("/accessibility", methods=["GET"])
 def accessibility():
     return render_template("accessibility.html")
