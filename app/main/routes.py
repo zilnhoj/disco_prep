@@ -25,7 +25,7 @@ def index():
         print(df.shape)
         print(type(df))
         top_ten_df = df.head(10)
-        return render_template("results.html", tables=[top_ten_df.to_html(classes='data')], header=top_ten_df.columns.values)
+        return render_template("results.html", tables=top_ten_df.values.tolist(), header=top_ten_df.columns.values)
     return render_template("example_form.html", form=form)
 
 @bp.route("/results", methods=["GET"])

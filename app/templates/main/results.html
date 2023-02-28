@@ -9,11 +9,25 @@
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-l">Data results for the DISCO tool</h1>
 
- {% for table in tables %}
-            {{header[loop.index]}}
-            {{ table|safe }}
+{% set rows=[] %}
+{% for row in tables %}
+    {% set cols = [] %}
+      {% for col in row %}
+      {{ cols.append({ "text": value|safe }) or "" }}
+      {% endfor %}
+
+      {{ rows.append(cols) or "" }}
 {% endfor %}
+
+{{ govukTable({
+      caption: "Data for DISCO",
+      captionClasses: "govuk-table__caption--l",
+      firstCellIsHeader: true,
+      rows: rows
+      })
+      }}
 
   </div>
 </div>
 {% endblock %}
+
