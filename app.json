@@ -7,7 +7,7 @@
   "env": {
     "CONTACT_EMAIL": {
       "description": "Contact email address used by the service team for feedback and support",
-      "value": "[contact email]"
+      "value": "[John.byrne@digital.cabinet-office.gov.uk]"
     },
     "CONTACT_PHONE": {
       "description": "Contact phone number used by the service team for feedback and support",
@@ -27,7 +27,7 @@
     },
     "SERVICE_NAME": {
       "description": "Name of this service, e.g. Apply for driving licence, Apply for student visa, etc",
-      "value": "[DISCO Data]"
+      "value": "DISCO Data"
     },
     "SERVICE_PHASE": {
       "description": "Phase the service is currently in, e.g. Alpha, Beta, etc",

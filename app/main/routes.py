@@ -1,11 +1,11 @@
-from flask import flash, json, make_response, redirect, render_template, request, url_for
+from flask import flash, json, make_response, render_template, request, url_for, Response
 from flask_wtf.csrf import CSRFError
 from werkzeug.exceptions import HTTPException
 
 from app.main import bp
 from app.main.forms import CookiesForm, DiscoForm
 from app.main.get_data import get_data
-
+from datetime import datetime
 import pandas as pd
 
 @bp.route("/", methods=["GET", "POST"])
@@ -15,24 +15,38 @@ def index():
 
     if form.validate_on_submit():
         desired_url = form.desired_url.data
-        print(f'routes Desired urls = {desired_url}')
         start_date = form.start_date.data
-        print(f'routes start_date: {start_date}')
         end_date = form.end_date.data
-        print(f'routes end_date day: {end_date}')
 
         df = get_data(start_date, end_date, desired_url)
-        print(df.shape)
-        print(type(df))
+
         top_ten_df = df.head(10)
-        return render_template("results.html", tables=top_ten_df.values.tolist(), header=top_ten_df.columns.values)
+
+        csv_link = url_for('main.csv_results', start_date=datetime.strftime(start_date, '%Y%m%d'), end_date=datetime.strftime(end_date, '%Y%m%d'), desired_url=desired_url)
+
+        return render_template("results.html", tables=top_ten_df.values.tolist(), header=top_ten_df.columns.values, csv_link=csv_link)
     return render_template("example_form.html", form=form)
 
 @bp.route("/results", methods=["GET"])
 def results():
 
-
     return render_template("results.html")
+
+@bp.route("/csv_results", methods=["GET"])
+def csv_results():
+    start_date = request.args['start_date']
+    end_date = request.args['end_date']
+    desired_url = request.args['desired_url']
+
+    start_date = datetime.strptime(start_date, '%Y%m%d')
+    end_date = datetime.strptime(end_date, '%Y%m%d')
+
+    df = get_data(start_date, end_date, desired_url)
+
+    response = Response(df.to_csv())
+    response.headers["Content-Disposition"] = "attachment"
+    response.headers["Content-Type"] = "text/csv"
+    return response
 
 @bp.route("/accessibility", methods=["GET"])
 def accessibility():
@@ -75,14 +89,14 @@ def cookies():
 @bp.route("/privacy", methods=["GET"])
 def privacy():
     return render_template("privacy.html")
-#
-#
-# @bp.app_errorhandler(HTTPException)
-# def http_exception(error):
-#     return render_template(f"{error.code}.html"), error.code
-#
-#
-# @bp.app_errorhandler(CSRFError)
-# def csrf_error(error):
-#     flash("The form you were submitting has expired. Please try again.")
-#     return redirect(request.full_path)
+
+
+@bp.app_errorhandler(HTTPException)
+def http_exception(error):
+    return render_template(f"{error.code}.html"), error.code
+
+
+@bp.app_errorhandler(CSRFError)
+def csrf_error(error):
+    flash("The form you were submitting has expired. Please try again.")
+    return redirect(request.full_path)
