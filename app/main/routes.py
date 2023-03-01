@@ -1,4 +1,4 @@
-from flask import flash, json, make_response, render_template, request, url_for, Response
+from flask import flash, json, make_response, render_template, request, url_for, Response, redirect
 from flask_wtf.csrf import CSRFError
 from werkzeug.exceptions import HTTPException
 
@@ -24,7 +24,7 @@ def index():
 
         csv_link = url_for('main.csv_results', start_date=datetime.strftime(start_date, '%Y%m%d'), end_date=datetime.strftime(end_date, '%Y%m%d'), desired_url=desired_url)
 
-        return render_template("results.html", tables=top_ten_df.values.tolist(), header=top_ten_df.columns.values, csv_link=csv_link)
+        return render_template("results.html", tables=top_ten_df.values.tolist(), df_header=top_ten_df.columns.values, csv_link=csv_link)
     return render_template("example_form.html", form=form)
 
 @bp.route("/results", methods=["GET"])

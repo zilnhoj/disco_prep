@@ -5,11 +5,24 @@
 {% endblock %}
 
 {% block content %}
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
-    <h1 class="govuk-heading-l">Data results for the DISCO tool</h1>
+
+<div class="govuk-width-container">
+  <a href="#" class="govuk-back-link">Back</a>
+  <main class="govuk-main-wrapper">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-one-third">
+        <h2 class="govuk-heading-m">One-third column</h2>
+        <p class="govuk-body">This is a paragraph inside a one-third wide column</p>
+
+      </div>
+      <div class="govuk-grid-column-two-thirds">
+              <h1 class="govuk-heading-l">Data results for the DISCO tool</h1>
       <a href="{{ csv_link }}" >Download csv of the data</a>
 
+{% set df_headers=[] %}
+      {% for head_name in df_header %}
+      {{ df_headers.append({ "text":head_name|safe }) or "" }}
+      {% endfor %}
 
 {% set rows=[] %}
 {% for row in tables %}
@@ -25,11 +38,18 @@
       "caption": "Data for DISCO",
       "captionClasses": "govuk-table__caption--l",
       "firstCellIsHeader": true,
+      "head": df_headers,
       "rows": rows
       })
       }}
 
   </div>
 </div>
+      </div>
+
+    </div>
+  </main>
+</div>
+
 {% endblock %}
 

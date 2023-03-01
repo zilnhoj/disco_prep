@@ -8,7 +8,7 @@ SRCDIR = os.path.dirname(os.path.abspath(__file__))
 DATADIR = os.path.join(SRCDIR, 'creds')
 
 CLIENT_SECRET_BQ = os.path.join(DATADIR, 'sde_service_account.json')
-print(f'CLIENT_SECRET_BQ {CLIENT_SECRET_BQ}')
+
 credentials = service_account.Credentials.from_service_account_file(
     CLIENT_SECRET_BQ,
     scopes=["https://www.googleapis.com/auth/cloud-platform"],
@@ -23,9 +23,6 @@ client = bigquery.Client()
 def get_data(start_date, end_date, desiredPage):
     start_date = datetime.strftime(start_date, '%Y%m%d')
     end_date = datetime.strftime(end_date, '%Y%m%d')
-    print(f"get_date start date: {start_date}")
-    print(f"get_date end date: {end_date}")
-    print(f'desired page from routees: {desiredPage}')
 
     camp_sql = f"""
     DECLARE first_date STRING DEFAULT '{start_date}';
@@ -67,5 +64,4 @@ def get_data(start_date, end_date, desiredPage):
   WHERE _table_suffix between first_date AND final_date
   AND hits.page.pagePath NOT LIKE '/print%'
     """
-    print(f'camp_sql - {camp_sql}')
     return client.query(camp_sql).to_dataframe()
