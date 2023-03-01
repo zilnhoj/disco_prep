@@ -4,7 +4,7 @@ from werkzeug.exceptions import HTTPException
 
 from app.main import bp
 from app.main.forms import CookiesForm, DiscoForm
-from app.main.get_data import get_data
+from app.main.get_data import get_summary_data, get_csv_data
 from datetime import datetime
 import pandas as pd
 
@@ -18,19 +18,19 @@ def index():
         start_date = form.start_date.data
         end_date = form.end_date.data
 
-        df = get_data(start_date, end_date, desired_url)
+        df = get_summary_data(start_date, end_date, desired_url)
 
         top_ten_df = df.head(10)
 
         csv_link = url_for('main.csv_results', start_date=datetime.strftime(start_date, '%Y%m%d'), end_date=datetime.strftime(end_date, '%Y%m%d'), desired_url=desired_url)
 
-        return render_template("results.html", tables=top_ten_df.values.tolist(), df_header=top_ten_df.columns.values, csv_link=csv_link)
+        return render_template("results.html", tables=top_ten_df.values.tolist(), df_header=top_ten_df.columns.values, csv_link=csv_link, form=form)
     return render_template("example_form.html", form=form)
 
 @bp.route("/results", methods=["GET"])
 def results():
-
-    return render_template("results.html")
+    form = DiscoForm()
+    return render_template("results.html", form=form)
 
 @bp.route("/csv_results", methods=["GET"])
 def csv_results():
@@ -41,7 +41,7 @@ def csv_results():
     start_date = datetime.strptime(start_date, '%Y%m%d')
     end_date = datetime.strptime(end_date, '%Y%m%d')
 
-    df = get_data(start_date, end_date, desired_url)
+    df = get_csv_data(start_date, end_date, desired_url)
 
     response = Response(df.to_csv())
     response.headers["Content-Disposition"] = "attachment"

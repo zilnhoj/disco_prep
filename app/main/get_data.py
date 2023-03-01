@@ -20,15 +20,47 @@ client = bigquery.Client(
 )
 client = bigquery.Client()
 
-def get_data(start_date, end_date, desiredPage):
+def get_summary_data(start_date, end_date, desiredPage):
     start_date = datetime.strftime(start_date, '%Y%m%d')
     end_date = datetime.strftime(end_date, '%Y%m%d')
 
-    camp_sql = f"""
+    summary_sql = f"""
     DECLARE first_date STRING DEFAULT '{start_date}';
     DECLARE final_date STRING DEFAULT '{end_date}';
     DECLARE filtered_urls_for STRING DEFAULT '{desiredPage}';
     
+    WITH sessions AS
+    (
+      SELECT DISTINCT fullVisitorId, visitId
+      FROM `govuk-bigquery-analytics.87773428.ga_sessions_*`, UNNEST(hits) AS hits
+      WHERE _table_suffix between first_date AND final_date
+      AND
+      REGEXP_CONTAINS(hits.page.pagePath, filtered_urls_for)
+    )
+
+  SELECT
+    cast(TIMESTAMP_MILLIS(CAST(hits.time+(visitStartTime*1000) AS INT64)) as STRING) AS datetime,
+    hits.page.pagePath,
+    hits.eventInfo.eventCategory,
+    hits.eventInfo.eventAction,
+    hits.eventInfo.eventLabel,
+  FROM `govuk-bigquery-analytics.87773428.ga_sessions_*`, unnest(hits) AS hits
+  INNER JOIN sessions USING(fullVisitorId, visitId)
+  WHERE _table_suffix between first_date AND final_date
+  AND hits.page.pagePath NOT LIKE '/print%'
+    """
+    return client.query(summary_sql).to_dataframe()
+
+
+def get_csv_data(start_date, end_date, desiredPage):
+    start_date = datetime.strftime(start_date, '%Y%m%d')
+    end_date = datetime.strftime(end_date, '%Y%m%d')
+
+    csv_sql = f"""
+    DECLARE first_date STRING DEFAULT '{start_date}';
+    DECLARE final_date STRING DEFAULT '{end_date}';
+    DECLARE filtered_urls_for STRING DEFAULT '{desiredPage}';
+
     WITH sessions AS
     (
       SELECT DISTINCT fullVisitorId, visitId
@@ -64,4 +96,4 @@ def get_data(start_date, end_date, desiredPage):
   WHERE _table_suffix between first_date AND final_date
   AND hits.page.pagePath NOT LIKE '/print%'
     """
-    return client.query(camp_sql).to_dataframe()
+    return client.query(csv_sql).to_dataframe()
