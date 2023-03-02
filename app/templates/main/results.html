@@ -15,7 +15,7 @@
   <a href="#" class="govuk-back-link">Back</a>
   <main class="govuk-main-wrapper">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-one-third">
+        <div class="govuk-grid-column-one-third search-panel">
         <h2 class="govuk-heading-m">DISCO Data Prep</h2>
         <p class="govuk-body">Use this to refine DISCO data prep</p>
 
@@ -46,7 +46,7 @@
       </div>
       <div class="govuk-grid-column-two-thirds">
               <h1 class="govuk-heading-l">Data results for the DISCO tool</h1>
-      <a href="{{ csv_link }}" >Download csv of the data</a>
+
 
 {% set df_headers=[] %}
       {% for head_name in df_header %}
@@ -71,6 +71,7 @@
       "rows": rows
       })
       }}
+          <p><a href="{{ csv_link }}" class="govuk-link">Download csv of the data</a></p>
 
   </div>
 </div>

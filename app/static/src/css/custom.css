@@ -1,1 +1,32 @@
-/* Your custom CSS goes here... */
+// Add extra styles here, or re-organise the Sass files in whichever way makes most sense to you
+
+.govuk-phase-banner {
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.govuk-width-container {
+  max-width: 1200px;
+}
+
+.govuk-table {
+  margin-bottom: 0;
+}
+.govuk-table .govuk-list {
+    padding-left: 2em;
+    text-indent: -1em;
+  }
+
+.govuk-button {
+  margin-bottom: 3px;
+}
+
+.search-panel {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.search-panel {
+  background: #f3f2f1;
+}
