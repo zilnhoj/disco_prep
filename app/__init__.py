@@ -10,6 +10,9 @@ from jinja2 import ChoiceLoader, PackageLoader, PrefixLoader
 
 from config import Config
 
+import gunicorn
+gunicorn.SERVER = 'undisclosed'
+
 assets = Environment()
 compress = Compress()
 csrf = CSRFProtect()
@@ -47,8 +50,8 @@ def create_app(config_class=Config):
     assets.init_app(app)
     compress.init_app(app)
     csrf.init_app(app)
-    limiter.init_app(app)
-    talisman.init_app(app, content_security_policy=csp)
+    # limiter.init_app(app)
+    # talisman.init_app(app, content_security_policy=csp)
     WTFormsHelpers(app)
 
     # Create static asset bundles

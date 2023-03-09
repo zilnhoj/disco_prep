@@ -7,7 +7,7 @@
   "env": {
     "CONTACT_EMAIL": {
       "description": "Contact email address used by the service team for feedback and support",
-      "value": "[John.byrne@digital.cabinet-office.gov.uk]"
+      "value": "John.byrne@digital.cabinet-office.gov.uk"
     },
     "CONTACT_PHONE": {
       "description": "Contact phone number used by the service team for feedback and support",

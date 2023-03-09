@@ -100,3 +100,9 @@ def http_exception(error):
 def csrf_error(error):
     flash("The form you were submitting has expired. Please try again.")
     return redirect(request.full_path)
+
+@bp.after_request
+def add_security_headers(resp):
+    csp = "default-src 'self'; script-src 'self' 'sha256-+6WnXIl4mbFTCARd8N3COQmT3bJJmo32N8q8ZSQAIcU=' 'sha256-l1eTVSK8DTnK8+yloud7wZUqFrI0atVo6VlC6PJvYaQ=';"
+    resp.headers['Content-Security-Policy']=csp
+    return resp
