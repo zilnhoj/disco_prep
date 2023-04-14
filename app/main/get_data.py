@@ -1,23 +1,16 @@
 import os
 
 from google.cloud import bigquery
-from google.oauth2 import service_account
+
 from datetime import datetime
+# from google.auth import default
+import google.auth
 
-SRCDIR = os.path.dirname(os.path.abspath(__file__))
-DATADIR = os.path.join(SRCDIR, 'creds')
+credentials, project_id = google.auth.default()
 
-CLIENT_SECRET_BQ = os.path.join(DATADIR, 'sde_service_account.json')
 
-credentials = service_account.Credentials.from_service_account_file(
-    CLIENT_SECRET_BQ,
-    scopes=["https://www.googleapis.com/auth/cloud-platform"],
-)
+# creds, project_id = default()
 
-client = bigquery.Client(
-    credentials=credentials,
-    project=credentials.project_id,
-)
 client = bigquery.Client()
 
 def get_summary_data(start_date, end_date, desiredPage):
