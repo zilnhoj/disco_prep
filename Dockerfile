@@ -12,6 +12,6 @@ copy app.json .
 copy build.sh .
 copy config.py .
 
-CMD ./build.sh
+RUN ./build.sh
 
 CMD gunicorn govuk-frontend-flask:app
