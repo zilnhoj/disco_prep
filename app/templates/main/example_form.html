@@ -6,16 +6,33 @@
 {%- from "govuk_frontend_jinja/components/button/macro.html" import govukButton -%}
 {%- from 'govuk_frontend_jinja/components/inset-text/macro.html' import govukInsetText -%}
 
-{% block pageTitle %}{%- if form and form.errors %}Error: {% endif -%}Example form – GOV.UK Frontend WTForms Demo{% endblock %}
+{% block pageTitle %}{%- if form and form.errors %}Error: {% endif -%}DISCO Data Prep{% endblock %}
 
 {% block content %}
 <div class="govuk-grid-row">
+  <h2 class="govuk-heading-m">DISCO Data Prep</h2>
+  <div class="govuk-grid-column-one-third search-panel">
+    
+    <h3 class="govuk-heading-m">How to use</h3>
+    
+  <p class="govuk-body">The DISCO application is a paid for tool the allows users show user journeys of users moving through GOV.UK</p>
+  <p class="govuk-body">The data that needs to be input into the tool needs to be formated in a particular way that can be used by the tool</p>
+<p class="govuk-body">The DISCO Data Prep tool can be used to provide the data you need in the correct format</p>
+<p class="govuk-body">Simply fill in each field and click on the "Continue" button</p>
+<p class="govuk-body">The tool connects to Bigquery so please be mindful of the date range when extracting the data you need 
+Try and keep the time period to one day
+</p>
+<p class="govuk-body">You have the ability to download the results into a csv from the results page</p>
+</div>
+
     <div class="govuk-grid-column-two-thirds">
     {% if form.errors %}
         {{ govukErrorSummary(wtforms_errors(form)) }}
     {% endif %}
 
-        <h1 class="govuk-heading-xl">DISCO Data Prep</h1>
+        <!-- <h1 class="govuk-heading-xl">DISCO Data Prep</h1> -->
+
+       
 
 <form action="" method="post" novalidate>
         {{ form.csrf_token }}

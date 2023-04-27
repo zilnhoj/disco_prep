@@ -1,4 +1,4 @@
-from flask import flash, json, make_response, render_template, request, url_for, Response, redirect
+from flask import flash, json, make_response, render_template, request, url_for, Response, redirect, g
 from flask_wtf.csrf import CSRFError
 from werkzeug.exceptions import HTTPException
 
@@ -7,6 +7,16 @@ from app.main.forms import CookiesForm, DiscoForm
 from app.main.get_data import get_summary_data, get_csv_data
 from datetime import datetime
 import pandas as pd
+
+# @bp.context_processor
+# def get_data_params():
+#     form.validate_on_submit()
+#     desired_url_form = form.desired_url.data
+#     start_date_form = form.start_date.data
+#     end_date_form = form.end_date.data
+#     return dict(desired_url=desired_url_form, 
+#             start_date=start_date_form,
+#             end_date=end_date_form)
 
 @bp.route("/", methods=["GET", "POST"])
 def index():
@@ -18,8 +28,28 @@ def index():
         start_date = form.start_date.data
         end_date = form.end_date.data
 
-        df = get_summary_data(start_date, end_date, desired_url)
 
+        df, total_bytes, cost_of_query = get_summary_data(start_date, end_date, desired_url)
+
+    
+        return render_template("cost_of_query.html", total_bytes=total_bytes, 
+                               cost_of_query=cost_of_query, 
+                               start_date=start_date,
+                               desired_url=desired_url,
+                               end_date=end_date,
+                               form=form)
+    return render_template("example_form.html", form=form)
+
+@bp.route("/cost-of-query", methods=["GET", "POST"])
+def cost_of_query():
+    form = DiscoForm()
+    if form.validate_on_submit():
+        desired_url = form.desired_url.data
+        start_date = form.start_date.data
+        end_date = form.end_date.data
+
+        df = get_summary_data(start_date, end_date, desired_url)
+        
         top_ten_df = df.head(10)
 
         csv_link = url_for('main.csv_results', start_date=datetime.strftime(start_date, '%Y%m%d'), end_date=datetime.strftime(end_date, '%Y%m%d'), desired_url=desired_url)
@@ -31,6 +61,7 @@ def index():
 def results():
     form = DiscoForm()
     return render_template("results.html", form=form)
+
 
 @bp.route("/csv_results", methods=["GET"])
 def csv_results():

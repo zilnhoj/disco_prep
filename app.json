@@ -1,9 +1,9 @@
 {
   "name": "GDS PA Community DISCO Prep",
-  "description": "Flask based GOV.UK Frontend template app",
-  "keywords": ["GOV.UK", "Flask", "Jinja", "WTForms"],
-  "website": "https://govuk-frontend-flask.herokuapp.com/",
-  "repository": "https://github.com/LandRegistry/govuk-frontend-flask",
+  "description": "Web app to return data in a format needed to use DISCO",
+  "keywords": ["GOV.UK", "Performance analysts", "DISCO", "User journeys"],
+  "website": "https://34.160.219.127.nip.io/",
+  "repository": "https://github.com/zilnhoj/govuk-disco-maqui-data-prep",
   "env": {
     "CONTACT_EMAIL": {
       "description": "Contact email address used by the service team for feedback and support",
@@ -15,7 +15,7 @@
     },
     "DEPARTMENT_NAME": {
       "description": "Name of the department providing this service, e,g. HM Land Registry, Ministry of Justice, etc",
-      "value": "[GDS Data Infrastructure]"
+      "value": "GDS Data Infrastructure"
     },
     "DEPARTMENT_URL": {
       "description": "URL of the department providing this service",
@@ -35,7 +35,7 @@
     },
     "SERVICE_URL": {
       "description": "URL of this service, e.g. https://something.service.gov.uk",
-      "value": "[url of service]"
+      "value": "https://34.160.219.127.nip.io/"
     }
   },
   "addons": [],

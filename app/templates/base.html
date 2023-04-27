@@ -7,12 +7,12 @@
 
 {% set assetPath = url_for('static', filename='').rstrip('/') %}
 
-{% block pageTitle %}{{config['SERVICE_NAME']}} – GOV.UK{% endblock %}
+{% block pageTitle %}DISCO Data{% endblock %}
 
 {% block head %}
-  <meta name="description" content="{{config['SERVICE_NAME']}}">
-  <meta name="keywords" content="GOV.UK, govuk, gov, government, uk, frontend, ui, user interface, jinja, python, flask, port, template, templating, macro, component, design system, html, forms, wtf, wtforms, widget, widgets, demo, example">
-  <meta name="author" content="{{config['DEPARTMENT_NAME']}}">
+  <meta name="description" content="DISCO Data Prep">
+  <meta name="keywords" content="Performance Analysts, DISCO, User journeys">
+  <meta name="author" content="Data Infrastructure">
   <!--[if gt IE 8]><!--><link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='govuk-frontend-4.4.1.min.css') }}" /><!--<![endif]-->
   <!--[if IE 8]><link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='govuk-frontend-ie8-4.4.1.min.css') }}" /><![endif]-->
   {% assets "css" %}<link href="{{ ASSET_URL }}" rel="stylesheet">{% endassets %}
@@ -110,7 +110,7 @@
 {% block header %}
   {{ govukHeader({
     'homepageUrl': url_for('main.index'),
-    'serviceName': config['SERVICE_NAME'],
+    'serviceName': "DISCO Data",
     'serviceUrl': url_for('main.index')
   }) }}
 {% endblock %}
@@ -118,7 +118,7 @@
 {% block beforeContent %}
   {{ govukPhaseBanner({
     'tag': {
-      'text': config['SERVICE_PHASE']
+      'text': "Alpha"
     },
     'html': 'This is a new service – your <a class="govuk-link" href="mailto:' + config['CONTACT_EMAIL'] +'?subject=Feedback">feedback</a> will help us to improve it.'
   }) }}

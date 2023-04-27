@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+
+{%- from 'govuk_frontend_jinja/components/error-summary/macro.html' import govukErrorSummary -%}
+{%- from "govuk_frontend_jinja/components/date-input/macro.html" import govukDateInput -%}
+{%- from "govuk_frontend_jinja/components/input/macro.html" import govukInput -%}
+{%- from "govuk_frontend_jinja/components/button/macro.html" import govukButton -%}
+{%- from 'govuk_frontend_jinja/components/inset-text/macro.html' import govukInsetText -%}
+{%- from "govuk_frontend_jinja/components/summary-list/macro.html" import govukSummaryList -%}
+
+{% block pageTitle %}{%- if form and form.errors %}Error: {% endif -%}DISCO Data Prep{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <h2 class="govuk-heading-m">DISCO Data Prep</h2>
+  <div class="govuk-grid-column-full search-panel">
+    
+    <h3 class="govuk-heading-m">How to use</h3>
+    
+  <p class="govuk-body">The query is {{ total_bytes|safe }} bytes</p>
+  <p class="govuk-body">It will cost £{{ cost_of_query|safe }}</p>
+<p class="govuk-body">If you are happy with this click on the green button below to get the data you need</p>
+
+
+{{ govukSummaryList({
+  rows: [
+    {
+      key: {
+        text: "Desired Url"
+      },
+      value: {
+        text: {{ desired_url|safe }}
+      },
+      actions: {
+        items: [
+          {
+            href: "#",
+            text: "Change",
+            visuallyHiddenText: "desired_url"
+          }
+        ]
+      }
+    },
+    {
+      key: {
+        text: "Start date"
+      },
+      value: {
+        text: {{ start_date|safe }}
+      },
+      actions: {
+        items: [
+          {
+            href: "#",
+            text: "Change",
+            visuallyHiddenText: "start_date"
+          }
+        ]
+      }
+    },
+    {
+      key: {
+        text: "End date"
+      },
+      value: {
+        text: {{ end_date|safe }}
+      },
+      actions: {
+        items: [
+          {
+            href: "#",
+            text: "Change",
+            visuallyHiddenText: "start_date"
+          }
+        ]
+      }
+    }
+  ]
+}) }}
+
+<form action="" method="post" novalidate>
+  {% if form.errors %}
+  {{ govukErrorSummary(wtforms_errors(form)) }}
+{% endif %}
+  {{ form.csrf_token }}
+
+
+     {{ form.submit }}
+ </form>
+</div>
+
+    
+</div>
+{% endblock %}

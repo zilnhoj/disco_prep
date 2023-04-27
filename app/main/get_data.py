@@ -42,7 +42,15 @@ def get_summary_data(start_date, end_date, desiredPage):
   WHERE _table_suffix between first_date AND final_date
   AND hits.page.pagePath NOT LIKE '/print%'
     """
-    return client.query(summary_sql).to_dataframe()
+    job_config = bigquery.QueryJobConfig(dry_run=True, use_query_cache=False)
+    query_job = client.query(
+    summary_sql,
+    job_config=job_config,
+)
+    tot_bytes_processed = query_job.total_bytes_processed
+    gb_processed = tot_bytes_processed / (1024 ** 3)
+    query_cost = tot_bytes_processed / (1024 ** 4)*5
+    return client.query(summary_sql).to_dataframe(), gb_processed, query_cost
 
 
 def get_csv_data(start_date, end_date, desiredPage):
